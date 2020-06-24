@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: prom
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: dev
+      app: prometheus
+  template:
+    metadata:
+      name: prometheuspod1
+      labels:
+        env: dev
+        app: prometheus
+    spec:
+      containers:
+      - name: "prom-con1"
+        image: "prom/node-exporter"
+      volumeMounts:
+          - name: prom-vol
+            mountPath: /data/
+
+
+
+
+
+
+
+
+   

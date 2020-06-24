@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: graf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: dev
+      app: grafana
+  template:
+    metadata:
+      name: grafanapod1
+      labels:
+        env: dev
+        app: grafana
+    spec:
+      containers:
+      - name: "grafana-con1"
+        image: "grafana/grafana"
+      volumeMounts:
+          - name: prom-vol
+            mountPath: /data/
+
+volumeMounts:
+          - name: graf-vol
+            mountPath: /var/lib/grafana/
+
+volumes:
+      - name: prom-vol
+        persistentVolumeClaim:
+          claimName: prometheuspvc
+
+
+      - name: graf-vol
+        persistentVolumeClaim:
+          claimName: grafanapvc
+
